@@ -51,11 +51,11 @@
                 android:id="@+id/commentsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.12"
-                android:orientation="vertical"
+                android:layout_weight="0.15"
+                android:orientation="horizontal"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@android:drawable/list_selector_background"
+                android:background="?attr/selectableItemBackground"
                 android:padding="8dp">
                 <ImageView
                     android:layout_width="24dp"

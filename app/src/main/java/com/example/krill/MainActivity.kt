@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         mFetchAdapter.setHasStableIds(true)
 
         val layoutManager = LinearLayoutManager(this)
-        //val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
         swipeRefresh.setOnRefreshListener {
             val total = mFetchAdapter.itemCount

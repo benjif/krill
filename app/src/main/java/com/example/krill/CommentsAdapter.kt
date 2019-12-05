@@ -38,7 +38,7 @@ class CommentsAdapter (val context: Context, val commentItems: List<Comment>) : 
         holder.authorText.text = commentItems[position].commentingUser.username
         holder.commentText.text = Html.fromHtml(commentItems[position].comment, HtmlCompat.FROM_HTML_MODE_LEGACY)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        params.setMargins(6 + 35 * (10 % commentItems[position].indentLevel - 1), 6, 6, 6)
+        params.setMargins(6 + 35 * (commentItems[position].indentLevel - 1), 6, 6, 6)
         holder.commentCardView.layoutParams = params
     }
 }
