@@ -11,4 +11,5 @@
     <string name="future_updates_line">Smooth in-app comment section viewing is the highest priority, as well as UI smoothness in general. Logging in, voting, and commenting follows.</string>
     <string name="dev_info_title">Developer info</string>
     <string name="dev_info_line">Benjamin Frady. https://frady.org/</string>
+    <string name="comment_icon_description">Comment icon</string>
 </resources>

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 
-const val recyclerLoadAheadOffset = 4
+const val recyclerLoadAheadOffset = 5
 
 class MainActivity : AppCompatActivity() {
     private val mFetchAdapter = FetchAdapter(this)
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         articles.layoutManager = layoutManager
         articles.itemAnimator = DefaultItemAnimator()
-        articles.setItemViewCacheSize(25)
+        articles.setItemViewCacheSize(20)
         articles.adapter = mFetchAdapter
 
         articles.addOnScrollListener(object : RecyclerView.OnScrollListener() {

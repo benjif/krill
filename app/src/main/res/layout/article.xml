@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -47,18 +48,21 @@
                     android:text="@string/temporary_string" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/commentsButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.12"
-                android:layout_gravity="bottom"
                 android:orientation="vertical"
-                android:padding="6dp">
-                <Button
-                    android:id="@+id/commentsButton"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@android:drawable/list_selector_background"
+                android:padding="8dp">
+                <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/comment_button" />
+                    android:src="@drawable/ic_message_reply_text"
+                    android:contentDescription="@string/comment_icon_description"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
         <FrameLayout

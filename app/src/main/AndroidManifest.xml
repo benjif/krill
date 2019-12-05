@@ -22,6 +22,7 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".WebActivity" />
+        <activity android:name=".CommentsActivity" />
     </application>
 
 </manifest>

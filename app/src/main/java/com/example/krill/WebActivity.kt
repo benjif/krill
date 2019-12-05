@@ -16,6 +16,11 @@ class WebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.web)
 
+        val toolbar = findViewById(R.id.toolbar) as Toolbar?
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         val url = intent.getStringExtra("link")
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -38,5 +43,10 @@ class WebActivity : AppCompatActivity() {
         }
 
         webview.loadUrl(url)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
