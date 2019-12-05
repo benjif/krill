@@ -3,28 +3,22 @@ package com.example.krill
 import android.view.View
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.net.Uri
-import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.TouchDelegate
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.android.synthetic.main.article.view.*
 import kotlinx.coroutines.*
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
 import kotlin.coroutines.CoroutineContext
 
+// OLD WEBVIEW CODE
+// KEEPING IT HERE FOR POTENTIAL REUSE
 fun openWebpage(context: Context, url: String) {
     val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
     val externalBrowser = sharedPref.getBoolean("externalBrowser", false)
@@ -146,7 +140,8 @@ class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if (link != null)
-                    openWebpage(context, link!!)
+                    openCustomTab(context, link!!)
+                    //openWebpage(context, link!!)
             }
         })
     }

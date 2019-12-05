@@ -1,9 +1,8 @@
 package com.example.krill
 
-import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.android.synthetic.main.comments.*
 import kotlinx.coroutines.*
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.coroutines.CoroutineContext
@@ -28,27 +26,33 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
 
         job = Job()
         val context = this
-        Thread {
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://lobste.rs")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-            val lobstersApi = retrofit.create(LobstersApi::class.java)
 
-            val commentsCallResponse = lobstersApi.getComments(shortId).execute()
-            val commentsResponse = commentsCallResponse.body()
+        if (shortId != null) {
+            Thread {
+                val moshi = Moshi.Builder()
+                    .add(KotlinJsonAdapterFactory())
+                    .build()
+                val retrofit = Retrofit.Builder()
+                    .baseUrl("https://lobste.rs")
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                val lobstersApi = retrofit.create(LobstersApi::class.java)
 
-            if (commentsResponse != null) {
-                runOnUiThread(Runnable() {
-                    val mCommentsFetchAdapter = CommentsAdapter(context, commentsResponse.comments)
-                    mCommentsFetchAdapter.setHasStableIds(true)
-                    comments.adapter = mCommentsFetchAdapter
-                })
-            }
-        }.start()
+                val commentsCallResponse = lobstersApi.getComments(shortId).execute()
+                val commentsResponse = commentsCallResponse.body()
+
+                if (commentsResponse != null) {
+                    runOnUiThread(Runnable() {
+                        if (commentsResponse.comments.isEmpty())
+                            emptyCommentsIndicator.visibility = View.VISIBLE
+                        val mCommentsFetchAdapter =
+                            CommentsAdapter(context, commentsResponse.comments)
+                        mCommentsFetchAdapter.setHasStableIds(true)
+                        comments.adapter = mCommentsFetchAdapter
+                    })
+                }
+            }.start()
+        }
 
         val layoutManager = LinearLayoutManager(this)
 

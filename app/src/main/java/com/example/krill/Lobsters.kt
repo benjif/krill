@@ -1,6 +1,5 @@
 package com.example.krill
 
-import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import retrofit2.Call
@@ -17,8 +16,11 @@ interface LobstersApi {
 
 data class User(
     val username: String,
+    val about: String,
+    val karma: Int,
     @Json(name = "avatar_url")
     val avatarUrl: String
+
 )
 
 data class CommentsResponse(

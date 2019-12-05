@@ -12,4 +12,5 @@
     <string name="dev_info_title">Developer info</string>
     <string name="dev_info_line">Benjamin Frady. https://frady.org/</string>
     <string name="comment_icon_description">Comment icon</string>
+    <string name="empty_comment_section">Nothing here yet</string>
 </resources>

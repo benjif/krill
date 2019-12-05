@@ -3,11 +3,8 @@ package com.example.krill
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -22,6 +19,10 @@ class MainActivity : AppCompatActivity() {
     private val mFetchAdapter = FetchAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        //val darkTheme = sharedPref.getBoolean("darkTheme", false)
+
         setContentView(R.layout.activity_main)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar?

@@ -1,8 +1,6 @@
 package com.example.krill
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient

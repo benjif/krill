@@ -1,7 +1,6 @@
 package com.example.krill
 
 import android.os.Bundle
-import android.widget.Switch
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 

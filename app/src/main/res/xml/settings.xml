@@ -30,5 +30,11 @@
             android:title="@string/notifications_preference"
             app:defaultValue="true"
             app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="darkTheme"
+            android:title="Dark theme"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>
