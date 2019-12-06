@@ -1,9 +1,12 @@
 package com.example.krill
 
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.moshi.Moshi
@@ -13,6 +16,7 @@ import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.abs
 
 class CommentsActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var job: Job
@@ -48,11 +52,20 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
                 val commentsResponse = commentsCallResponse.body()
 
                 if (commentsResponse != null) {
+                    val commentList = commentsResponse.comments.toMutableList()
+
+                    // Pre-processing to avoid slowing RV adapter
+                    for (i in commentList.indices) {
+                        commentList[i].comment = Html.fromHtml(commentList[i].comment, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                            .toString()
+                        commentList[i].indentMargin = abs((commentList[i].indentLevel + 3) % 8 - 4) * 35
+                    }
+
                     runOnUiThread(Runnable() {
-                        if (commentsResponse.comments.isEmpty())
+                        if (commentList.isEmpty())
                             emptyCommentsIndicator.visibility = View.VISIBLE
                         val commentsAdapter =
-                            CommentsAdapter(context, commentsResponse.comments)
+                            CommentsAdapter(context, commentList)
                         commentsAdapter.setHasStableIds(true)
                         comments.adapter = commentsAdapter
                     })

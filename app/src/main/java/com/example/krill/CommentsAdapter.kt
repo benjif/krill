@@ -40,11 +40,11 @@ class CommentsAdapter (val context: Context, var commentItems: List<Comment>) : 
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         holder.authorText.text = commentItems[position].commentingUser.username
-        holder.commentText.text = Html.fromHtml(commentItems[position].comment, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        holder.commentText.text = commentItems[position].comment
         val score = commentItems[position].score.toString() + 'p'
         holder.commentScoreText.text = score
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        val indentMargin = abs((commentItems[position].indentLevel + 3) % 8 - 4) * 35
+        val indentMargin = commentItems[position].indentMargin
         params.setMargins(6 + indentMargin, 6, 6, 6)
         holder.commentCardView.layoutParams = params
         holder.user = commentItems[position].commentingUser

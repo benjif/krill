@@ -36,12 +36,16 @@ data class Comment(
     val score: Int,
     val upvotes: Int,
     val downvotes: Int,
-    val comment: String,
+    // (var to allow for html pre-processing)
+    var comment: String,
     val url: String,
     @Json(name = "indent_level")
     val indentLevel: Int,
     @Json(name = "commenting_user")
-    val commentingUser: User
+    val commentingUser: User,
+    // (calculated indent amount for card)
+    @Transient
+    var indentMargin: Int = 0
 )
 
 @JsonClass(generateAdapter = true)

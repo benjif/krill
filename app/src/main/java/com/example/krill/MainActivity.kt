@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar?
         setSupportActionBar(toolbar)
 
+        fetchMore()
         mFetchAdapter.setHasStableIds(true)
 
         val layoutManager = LinearLayoutManager(this)
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         articles.layoutManager = layoutManager
         articles.itemAnimator = DefaultItemAnimator()
-        articles.setItemViewCacheSize(20)
+        articles.setItemViewCacheSize(25)
         articles.adapter = mFetchAdapter
 
         articles.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -57,8 +58,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-        fetchMore()
     }
 
     fun fetchMore() = runBlocking {
