@@ -3,11 +3,12 @@ package com.example.krill
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import kotlinx.android.synthetic.main.user.*
 
-class SettingsActivity : AppCompatActivity() {
+class UserViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings)
+        setContentView(R.layout.user)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar?
         setSupportActionBar(toolbar)
@@ -15,9 +16,13 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content, SettingsFragment())
-            .commit()
+        val username = intent.getStringExtra("username")
+        val karma = intent.getIntExtra("karma", 0).toString() + 'p'
+        val about = intent.getStringExtra("about")
+
+        usernameText.text = username
+        karmaText.text = karma
+        aboutText.text = about
     }
 
     override fun onSupportNavigateUp(): Boolean {

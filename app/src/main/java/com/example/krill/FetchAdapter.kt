@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
@@ -16,24 +17,6 @@ import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.coroutines.CoroutineContext
-
-// OLD WEBVIEW CODE
-// KEEPING IT HERE FOR POTENTIAL REUSE
-fun openWebpage(context: Context, url: String) {
-    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-    val externalBrowser = sharedPref.getBoolean("externalBrowser", false)
-    if (externalBrowser) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(url)
-        )
-        context.startActivity(intent)
-    } else {
-        val intent = Intent(context, WebActivity::class.java)
-        intent.putExtra("link", url)
-        context.startActivity(intent)
-    }
-}
 
 class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolder>() {
     var items = mutableListOf<Article?>()
@@ -117,17 +100,14 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
             holder.authorText.text = items[position]!!.submitterUser.username
             holder.scoreText.text = items[position]!!.score.toString()
             holder.link = items[position]!!.url
-            holder.commentsButton.setOnClickListener {
-                    val intent = Intent(context, CommentsActivity::class.java)
-                    intent.putExtra("id", items[position]!!.shortId)
-                    context.startActivity(intent)
-            }
+            holder.shortId = items[position]!!.shortId
         }
     }
 }
 
 class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var link: String? = null
+    var shortId: String? = null
     val titleText = view.titleText
     val authorText = view.authorText
     val scoreText = view.scoreText
@@ -135,10 +115,22 @@ class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val context = titleText.context
 
     init {
+        // is this bad practice?
         view.setOnClickListener {
-                if (link != null)
-                    openCustomTab(context, link!!)
-                    //openWebpage(context, link!!)
+            if (link != null && link != "")
+                openCustomTab(context, link!!)
+            if (link == "" && shortId != null) {
+                val intent = Intent(context, CommentsActivity::class.java)
+                intent.putExtra("id", shortId)
+                context.startActivity(intent)
+            }
+        }
+        commentsButton.setOnClickListener {
+            if (shortId != null) {
+                val intent = Intent(context, CommentsActivity::class.java)
+                intent.putExtra("id", shortId)
+                context.startActivity(intent)
+            }
         }
     }
 }

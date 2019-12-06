@@ -26,6 +26,7 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val shortId = intent.getStringExtra("id")
 

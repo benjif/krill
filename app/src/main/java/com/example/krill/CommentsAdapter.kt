@@ -1,6 +1,7 @@
 package com.example.krill
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.text.Html
 import android.util.Log
@@ -46,9 +47,7 @@ class CommentsAdapter (val context: Context, var commentItems: List<Comment>) : 
         val indentMargin = abs((commentItems[position].indentLevel + 3) % 8 - 4) * 35
         params.setMargins(6 + indentMargin, 6, 6, 6)
         holder.commentCardView.layoutParams = params
-        holder.popupUsername.text = commentItems[position].commentingUser.username
-        holder.popupKarma.text = commentItems[position].commentingUser.karma.toString()
-        holder.popupAbout.text = commentItems[position].commentingUser.about
+        holder.user = commentItems[position].commentingUser
     }
 
     inner class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -56,27 +55,16 @@ class CommentsAdapter (val context: Context, var commentItems: List<Comment>) : 
         var authorText = view.commentAuthorText
         var commentScoreText = view.commentScoreText
         var commentCardView = view.commentCardView
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
-                as LayoutInflater
-        val popupView = inflater.inflate(R.layout.user, null)
-        var popupUsername = popupView.username
-        var popupKarma = popupView.karma
-        var popupAbout = popupView.about
+        var user: User? = null
 
         init {
             authorText.setOnClickListener {
-                val popupWindow = PopupWindow(
-                    popupView,
-                    Resources.getSystem().displayMetrics.widthPixels,
-                    Resources.getSystem().displayMetrics.heightPixels
-                )
-                popupWindow.isOutsideTouchable = false
-                popupWindow.isFocusable = true
-                popupWindow.animationStyle = R.style.PopupAnimation
-                popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
-                popupView.setOnTouchListener { _: View, _: MotionEvent ->
-                    popupWindow.dismiss()
-                    true
+                if (user != null) {
+                    val intent = Intent(context, UserViewActivity::class.java)
+                    intent.putExtra("username", user!!.username)
+                    intent.putExtra("karma", user!!.karma)
+                    intent.putExtra("about", user!!.about)
+                    context.startActivity(intent)
                 }
             }
         }
