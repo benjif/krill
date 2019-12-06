@@ -117,13 +117,11 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
             holder.authorText.text = items[position]!!.submitterUser.username
             holder.scoreText.text = items[position]!!.score.toString()
             holder.link = items[position]!!.url
-            holder.commentsButton.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
+            holder.commentsButton.setOnClickListener {
                     val intent = Intent(context, CommentsActivity::class.java)
                     intent.putExtra("id", items[position]!!.shortId)
                     context.startActivity(intent)
-                }
-            })
+            }
         }
     }
 }
@@ -137,12 +135,10 @@ class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val context = titleText.context
 
     init {
-        view.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
+        view.setOnClickListener {
                 if (link != null)
                     openCustomTab(context, link!!)
                     //openWebpage(context, link!!)
-            }
-        })
+        }
     }
 }

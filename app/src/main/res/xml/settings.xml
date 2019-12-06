@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <PreferenceCategory
         android:title="Browser"
         app:iconSpaceReserved="false">
@@ -21,6 +21,8 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
+
+    <!-- TODO
     <PreferenceCategory
         android:title="@string/basic_preferences"
         app:iconSpaceReserved="false">
@@ -37,4 +39,6 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
+    -->
+
 </PreferenceScreen>

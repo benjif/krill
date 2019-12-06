@@ -7,6 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface LobstersApi {
+    // TODO: differentiate between 'newest' and 'hottest' views
+
     @GET("/page/{pageNumber}.json")
     fun getArticles(@Path("pageNumber") pageNumber: String) : Call<List<Article>>
 
@@ -20,7 +22,6 @@ data class User(
     val karma: Int,
     @Json(name = "avatar_url")
     val avatarUrl: String
-
 )
 
 data class CommentsResponse(

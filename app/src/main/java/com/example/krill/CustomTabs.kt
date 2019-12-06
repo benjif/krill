@@ -31,7 +31,6 @@ fun getCustomTabsPackages(context: Context): List<ResolveInfo> {
 
 fun getPreferredCustomTabsPackage(context: Context): ResolveInfo? {
     val supportedPackages = getCustomTabsPackages(context)
-
     if (supportedPackages.isEmpty())
         return null
 

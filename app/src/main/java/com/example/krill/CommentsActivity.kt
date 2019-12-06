@@ -22,6 +22,11 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comments)
 
+        val toolbar = findViewById(R.id.toolbar) as Toolbar?
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         val shortId = intent.getStringExtra("id")
 
         job = Job()
@@ -45,10 +50,10 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
                     runOnUiThread(Runnable() {
                         if (commentsResponse.comments.isEmpty())
                             emptyCommentsIndicator.visibility = View.VISIBLE
-                        val mCommentsFetchAdapter =
+                        val commentsAdapter =
                             CommentsAdapter(context, commentsResponse.comments)
-                        mCommentsFetchAdapter.setHasStableIds(true)
-                        comments.adapter = mCommentsFetchAdapter
+                        commentsAdapter.setHasStableIds(true)
+                        comments.adapter = commentsAdapter
                     })
                 }
             }.start()
@@ -59,11 +64,6 @@ class CommentsActivity : AppCompatActivity(), CoroutineScope {
         comments.layoutManager = layoutManager
         comments.itemAnimator = DefaultItemAnimator()
         comments.setItemViewCacheSize(10)
-
-        val toolbar = findViewById(R.id.toolbar) as Toolbar?
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

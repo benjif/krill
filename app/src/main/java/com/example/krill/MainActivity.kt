@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO DARK THEME
         //val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         //val darkTheme = sharedPref.getBoolean("darkTheme", false)
 

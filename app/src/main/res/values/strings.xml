@@ -5,12 +5,12 @@
     <string name="basic_preferences">Basic</string>
     <string name="temporary_string">…</string>
     <string name="notifications_preference">Notifications</string>
-    <string name="about_line1">Krill is licensed under the BSD 2-clause free software license. The source code is available on my GitHub. https://github.com/benjif</string>
-    <string name="about_line2">Krill was made using Kotlin and AndroidX, as my first foray into android development.</string>
+    <string name="about_line1">Krill is licensed under the BSD 2-clause free software license. The source code is freely available on my GitHub. https://github.com/benjif</string>
+    <string name="about_line2">Krill was made using Kotlin and AndroidX, as my first foray into android development. As such, features will be sparse at first.</string>
     <string name="future_updates_title">Future updates</string>
     <string name="future_updates_line">Smooth in-app comment section viewing is the highest priority, as well as UI smoothness in general. Logging in, voting, and commenting follows.</string>
     <string name="dev_info_title">Developer info</string>
-    <string name="dev_info_line">Benjamin Frady. https://frady.org/</string>
+    <string name="dev_info_line">https://frady.org/</string>
     <string name="comment_icon_description">Comment icon</string>
     <string name="empty_comment_section">Nothing here yet</string>
 </resources>
