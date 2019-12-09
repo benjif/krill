@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ac130d</color>
+    <color name="colorSecondary">#A60147</color>
+    <color name="colorTertiary">#852B6C</color>
+    <color name="colorQuaternary">#584079</color>
+    <color name="colorQuinary">#33486F</color>
+    <color name="colorSenary">#2f4858</color>
+    <color name="colorSeptenary">#1c6e7d</color>
+    <color name="colorOctonary">#039590</color>
+    <color name="colorNonary">#4bbc8e</color>
+    <color name="colorDenary">#9bde7e</color>
     <color name="colorPrimaryDark">#96100b</color>
     <color name="colorAccent">#ac130d</color>
     <color name="colorGray">#F7F7F7</color>

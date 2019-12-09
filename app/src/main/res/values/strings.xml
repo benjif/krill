@@ -13,4 +13,11 @@
     <string name="dev_info_line">https://frady.org/</string>
     <string name="comment_icon_description">Comment icon</string>
     <string name="empty_comment_section">Nothing here yet</string>
+    <string name="nav_avatar_description">Avatar Icon</string>
+    <string name="hottest">Hottest</string>
+    <string name="recent">Recent</string>
+    <string name="username">Email or Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="add_account">Add account</string>
 </resources>

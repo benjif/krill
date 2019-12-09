@@ -1,22 +1,38 @@
 package com.example.krill
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.login_dialog.view.*
 import kotlinx.coroutines.runBlocking
 
 const val recyclerLoadAheadOffset = 5
+const val ACCOUNT_PREFS = "account"
+const val ACCOUNT_USERNAME = "username"
+const val ACCOUNT_PASSWORD = "password"
 
-class MainActivity : AppCompatActivity() {
+var accountUsername = ""
+var accountPassword = ""
+
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val mFetchAdapter = FetchAdapter(this)
+    private lateinit var mToggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,13 +42,50 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar?
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
         fetchMore()
         mFetchAdapter.setHasStableIds(true)
 
         val layoutManager = LinearLayoutManager(this)
+
+        articles.layoutManager = layoutManager
+        articles.itemAnimator = DefaultItemAnimator()
+        articles.setItemViewCacheSize(25)
+        articles.adapter = mFetchAdapter
+
+        val navigation = findViewById(R.id.navigation_view) as NavigationView
+        navigation.setNavigationItemSelectedListener(this)
+        val navigationHeader = navigation.getHeaderView(0)
+        navigationHeader.setOnClickListener {
+            val inflater = LayoutInflater.from(this)
+            val loginView = inflater.inflate(R.layout.login_dialog, null)
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setView(loginView)
+            alertDialogBuilder.setPositiveButton("Add account", DialogInterface.OnClickListener { _, _ ->
+                val emailOrName = loginView.dialogUsername.text
+                    .toString()
+                val password = loginView.dialogPassword.text
+                    .toString()
+                Thread {
+                    val loginResponse = RetrofitClient.Api
+                        .login(emailOrName, password)
+                        .execute()
+                    if (loginResponse.code() == 302) {
+                        accountUsername = emailOrName
+                        accountPassword = password
+                    }
+                }.start()
+            })
+            alertDialogBuilder.show()
+        }
+
+        mToggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
+            0, 0)
+        drawer_layout.addDrawerListener(mToggle)
+        mToggle.isDrawerIndicatorEnabled = true
+        mToggle.syncState()
 
         swipeRefresh.setOnRefreshListener {
             val total = mFetchAdapter.itemCount
@@ -43,11 +96,6 @@ class MainActivity : AppCompatActivity() {
             mFetchAdapter.notifyItemRangeInserted(0, 25)
             swipeRefresh.isRefreshing = false
         }
-
-        articles.layoutManager = layoutManager
-        articles.itemAnimator = DefaultItemAnimator()
-        articles.setItemViewCacheSize(25)
-        articles.adapter = mFetchAdapter
 
         articles.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -70,6 +118,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (mToggle.onOptionsItemSelected(item)) return true
         when(item.itemId) {
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
@@ -81,5 +130,60 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when (p0.itemId) {
+            R.id.hottest -> {
+
+            }
+            R.id.recent -> {
+
+            }
+        }
+        return true
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        mToggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        mToggle.onConfigurationChanged(newConfig)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setAccount()
+    }
+
+    override fun onResume() {
+        // TODO: verify account credentials still work
+        super.onResume()
+        getAccount()
+    }
+
+    fun setAccount() {
+        val sharedPreferences = getSharedPreferences(ACCOUNT_PREFS,
+            Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(ACCOUNT_USERNAME, accountUsername)
+        editor.putString(ACCOUNT_PASSWORD, accountPassword)
+        editor.commit()
+    }
+
+    fun getAccount() {
+        val sharedPreferences = getSharedPreferences(ACCOUNT_PREFS,
+            Context.MODE_PRIVATE)
+        val usernameValue = sharedPreferences.getString(ACCOUNT_USERNAME, "")
+        val passwordValue = sharedPreferences.getString(ACCOUNT_PASSWORD, "")
+        if (usernameValue != null)
+            Log.i("Found saved username", usernameValue)
+        if (passwordValue != null)
+            Log.i("Found saved password", passwordValue)
+        accountUsername = usernameValue ?: ""
+        accountPassword = passwordValue ?: ""
     }
 }

@@ -14,7 +14,7 @@ class UserViewActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.title = "User"
 
         val username = intent.getStringExtra("username")
         val karma = intent.getIntExtra("karma", 0).toString() + 'p'

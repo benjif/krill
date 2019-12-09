@@ -2,12 +2,18 @@ package com.example.krill
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
+
+const val BASE_URL = "https://lobste.rs"
 
 interface LobstersApi {
     // TODO: differentiate between 'newest' and 'hottest' views
+
+    @FormUrlEncoded
+    @POST("/login")
+    fun login(@Field("email") email: String, @Field("password") password: String) : Call<ResponseBody>
 
     @GET("/page/{pageNumber}.json")
     fun getArticles(@Path("pageNumber") pageNumber: String) : Call<List<Article>>
@@ -45,7 +51,9 @@ data class Comment(
     val commentingUser: User,
     // (calculated indent amount for card)
     @Transient
-    var indentMargin: Int = 0
+    var indentMargin: Int = 0,
+    @Transient
+    var indentColor: Int = 0
 )
 
 @JsonClass(generateAdapter = true)
@@ -68,5 +76,7 @@ data class Article(
     val commentsUrl: String,
     @Json(name = "submitter_user")
     val submitterUser: User,
-    val tags: List<String>
+    val tags: List<String>,
+    @Transient
+    var tagsString: String = ""
 )

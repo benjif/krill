@@ -13,7 +13,7 @@ class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.title = "Settings"
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.content, SettingsFragment())

@@ -3,19 +3,12 @@ package com.example.krill
 import android.view.View
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.moshi.*
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.android.synthetic.main.article.view.*
 import kotlinx.coroutines.*
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.coroutines.CoroutineContext
 
 class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolder>() {
@@ -26,14 +19,6 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Default
     private val scope = CoroutineScope(coroutineContext)
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://lobste.rs")
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
-    private val lobstersApi = retrofit.create(LobstersApi::class.java)
 
     fun isLoading(): Boolean {
         return loading
@@ -55,13 +40,16 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
         }
         loading = true
         scope.launch {
-            val retroResp = lobstersApi.getArticles(pageNumber.toString()).execute()
+            val retroResp = RetrofitClient.Api.getArticles(pageNumber.toString()).execute()
             pageNumber += 1
             val articlesResponse = retroResp.body()
             if (articlesResponse != null) {
                 if (articlesResponse.size == 25) {
                     for (i in 0 until articlesResponse.size) {
                         items[startIndex + i] = articlesResponse[i]
+                        items[startIndex + i]!!.tagsString = items[startIndex + i]!!.tags
+                            .take(3)
+                            .joinToString()
                     }
                     h.post(Runnable() {
                         notifyItemRangeChanged(startIndex, 25)
@@ -91,16 +79,23 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        if (items[position] == null) {
-            holder.titleText.text = "..."
-            holder.authorText.text = "..."
-            holder.scoreText.text = ""
-        } else {
+        if (items[position] != null) {
             holder.titleText.text = items[position]!!.title
             holder.authorText.text = items[position]!!.submitterUser.username
             holder.scoreText.text = items[position]!!.score.toString()
+            holder.tagsText.text = items[position]!!.tagsString
+            if (items[position]!!.commentCount != 0)
+                holder.commentCountText.text = items[position]!!.commentCount.toString()
+            else
+                holder.commentCountText.text = ""
             holder.link = items[position]!!.url
             holder.shortId = items[position]!!.shortId
+        } else {
+            holder.titleText.text = "...";
+            holder.authorText.text = "...";
+            holder.tagsText.text = "...";
+            holder.commentCountText.text = "";
+            holder.scoreText.text = "";
         }
     }
 }
@@ -111,6 +106,8 @@ class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val titleText = view.titleText
     val authorText = view.authorText
     val scoreText = view.scoreText
+    val tagsText = view.tagsText
+    val commentCountText = view.commentCountText
     val commentsButton = view.commentsButton
     val context = titleText.context
 
