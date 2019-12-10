@@ -11,21 +11,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <!-- Theme.AppCompat.Light.DarkActionBar -->
     <style name="AppTheme.AppBarOverlay" parent="AppTheme">
         <item name="android:textColorPrimary">#fff</item>
         <item name="android:textColorSecondary">#fff</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="Theme.MaterialComponents.Light" />
-
-    <style name="PopupAnimation">
-        <item name="android:windowEnterAnimation">@anim/fadein_animation</item>
-        <item name="android:windowExitAnimation">@anim/fadeout_animation</item>
-    </style>
 
 </resources>

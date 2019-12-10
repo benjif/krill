@@ -45,7 +45,7 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
             val articlesResponse = retroResp.body()
             if (articlesResponse != null) {
                 if (articlesResponse.size == 25) {
-                    for (i in 0 until articlesResponse.size) {
+                    for (i in articlesResponse.indices) {
                         items[startIndex + i] = articlesResponse[i]
                         items[startIndex + i]!!.tagsString = items[startIndex + i]!!.tags
                             .take(3)
@@ -91,11 +91,11 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
             holder.link = items[position]!!.url
             holder.shortId = items[position]!!.shortId
         } else {
-            holder.titleText.text = "...";
-            holder.authorText.text = "...";
-            holder.tagsText.text = "...";
-            holder.commentCountText.text = "";
-            holder.scoreText.text = "";
+            holder.titleText.text = "..."
+            holder.authorText.text = "..."
+            holder.tagsText.text = "..."
+            holder.commentCountText.text = ""
+            holder.scoreText.text = ""
         }
     }
 }

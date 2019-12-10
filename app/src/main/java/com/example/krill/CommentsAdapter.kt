@@ -44,11 +44,11 @@ class CommentsAdapter (val context: Context, val commentItems: List<Comment>) : 
     }
 
     inner class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var commentText = view.commentText
-        var authorText = view.commentAuthorText
-        var commentScoreText = view.commentScoreText
-        var commentView = view.commentView
-        var colorBar = view.colorBar
+        val commentText = view.commentText
+        val authorText = view.commentAuthorText
+        val commentScoreText = view.commentScoreText
+        val commentView = view.commentView
+        val colorBar = view.colorBar
         var user: User? = null
 
         init {
