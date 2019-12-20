@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.login_dialog.view.*
-import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.runBlocking
 
 const val recyclerLoadAheadOffset = 5
@@ -52,14 +50,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         articles.setItemViewCacheSize(25)
         articles.adapter = mFetchAdapter
 
-        val navigation = findViewById<NavigationView>(R.id.navigationView)
-        navigation.setNavigationItemSelectedListener(this)
-        val navigationHeader = navigation.getHeaderView(0)
+        //val navigation = findViewById<NavigationView>(R.id.navigationView)
+        //navigation.setNavigationItemSelectedListener(this)
+        //val navigationHeader = navigation.getHeaderView(0)
 
         mToggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, 0, 0)
-        drawer_layout.addDrawerListener(mToggle)
-        mToggle.isDrawerIndicatorEnabled = true
-        mToggle.syncState()
+        //drawer_layout.addDrawerListener(mToggle)
+        //mToggle.isDrawerIndicatorEnabled = true
+        //mToggle.syncState()
 
         swipeRefresh.setOnRefreshListener {
             val total = mFetchAdapter.itemCount
