@@ -25,7 +25,7 @@ interface LobstersApi {
 data class User(
     val username: String,
     val about: String,
-    val karma: Int,
+    val karma: Int = 0,
     @Json(name = "avatar_url")
     val avatarUrl: String
 )
