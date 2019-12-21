@@ -40,9 +40,14 @@ class FetchAdapter(val context: Context) : RecyclerView.Adapter<ArticleViewHolde
         }
         loading = true
         scope.launch {
-            val retroResp = RetrofitClient.Api.getArticles(pageNumber.toString()).execute()
+            val retroAction = RetrofitClient.Api.getArticles(pageNumber.toString())
+            var retroResponse = retroAction.execute()
+            while (!retroResponse.isSuccessful) {
+                retroResponse = retroAction.clone().execute()
+                delay(750)
+            }
             pageNumber += 1
-            val articlesResponse = retroResp.body()
+            val articlesResponse = retroResponse.body()
             if (articlesResponse != null) {
                 if (articlesResponse.size == 25) {
                     for (i in articlesResponse.indices) {
