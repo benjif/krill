@@ -67,8 +67,6 @@ data class Article(
     val title: String,
     val url: String,
     val score: Int,
-    val upvotes: Int,
-    val downvotes: Int,
     @Json(name = "comment_count")
     val commentCount: Int,
     val description: String,
