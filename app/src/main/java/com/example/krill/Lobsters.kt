@@ -40,8 +40,6 @@ data class Comment(
     @Json(name = "is_deleted")
     val isDeleted: Boolean,
     val score: Int,
-    val upvotes: Int,
-    val downvotes: Int,
     // (var to allow for html pre-processing)
     var comment: String,
     val url: String,
