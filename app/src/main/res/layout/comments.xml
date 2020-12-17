@@ -23,16 +23,17 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <TextView
-                android:id="@+id/emptyCommentsIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/empty_comment_section"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textStyle="bold"
-                android:visibility="gone" />
+        <TextView
+            android:id="@+id/emptyCommentsIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/empty_comment_section"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3c3c3c"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </LinearLayout>

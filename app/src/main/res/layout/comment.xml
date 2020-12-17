@@ -57,8 +57,9 @@
                     android:id="@+id/commentText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/temporary_string"
+                    android:textColor="#3c3c3c"
                     android:textIsSelectable="true" />
             </LinearLayout>
         </LinearLayout>
